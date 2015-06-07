@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="Django default" uuid="6fbb71a9-271d-43b9-943b-4645172d833a">
+    <database-info product="MySQL" version="5.6.23-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="sisloc"/>
+    <table name="auth_group" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="80" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auth_group_permissions_group_id_58c48ba9_fk_auth_group_id" table="auth_group_permissions" schema="" catalog="sisloc" columns="group_id"/>
+      <exported-key name="auth_user_groups_group_id_30a071c9_fk_auth_group_id" table="auth_user_groups" schema="" catalog="sisloc" columns="group_id"/>
+      <index name="name" unique="true" columns="name"/>
+    </table>
+    <table name="auth_group_permissions" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="permission_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_group_permissi_permission_id_23962d04_fk_auth_permission_id" columns="permission_id" ref-table="auth_permission" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auth_group_permissions_group_id_58c48ba9_fk_auth_group_id" columns="group_id" ref-table="auth_group" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="group_id" unique="true" columns="permission_id"/>
+      <index name="auth_group_permissi_permission_id_23962d04_fk_auth_permission_id" unique="false" columns="permission_id"/>
+    </table>
+    <table name="auth_permission" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="content_type_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="codename" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_permissi_content_type_id_51277a81_fk_django_content_type_id" columns="content_type_id" ref-table="django_content_type" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="auth_group_permissi_permission_id_23962d04_fk_auth_permission_id" table="auth_group_permissions" schema="" catalog="sisloc" columns="permission_id"/>
+      <exported-key name="auth_user_user_perm_permission_id_3d7071f0_fk_auth_permission_id" table="auth_user_user_permissions" schema="" catalog="sisloc" columns="permission_id"/>
+      <index name="content_type_id" unique="true" columns="codename"/>
+    </table>
+    <table name="auth_user" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="password" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_login" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="is_superuser" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="username" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="first_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="254" scale="0" nullable="false" jdbcType="12"/>
+      <column name="is_staff" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="is_active" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="date_joined" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auth_user_groups_user_id_24702650_fk_auth_user_id" table="auth_user_groups" schema="" catalog="sisloc" columns="user_id"/>
+      <exported-key name="auth_user_user_permissions_user_id_7cd7acb6_fk_auth_user_id" table="auth_user_user_permissions" schema="" catalog="sisloc" columns="user_id"/>
+      <exported-key name="django_admin_log_user_id_1c5f563_fk_auth_user_id" table="django_admin_log" schema="" catalog="sisloc" columns="user_id"/>
+      <index name="username" unique="true" columns="username"/>
+    </table>
+    <table name="auth_user_groups" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_user_groups_group_id_30a071c9_fk_auth_group_id" columns="group_id" ref-table="auth_group" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auth_user_groups_user_id_24702650_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="user_id" unique="true" columns="group_id"/>
+      <index name="auth_user_groups_group_id_30a071c9_fk_auth_group_id" unique="false" columns="group_id"/>
+    </table>
+    <table name="auth_user_user_permissions" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="permission_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auth_user_user_perm_permission_id_3d7071f0_fk_auth_permission_id" columns="permission_id" ref-table="auth_permission" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auth_user_user_permissions_user_id_7cd7acb6_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="user_id" unique="true" columns="permission_id"/>
+      <index name="auth_user_user_perm_permission_id_3d7071f0_fk_auth_permission_id" unique="false" columns="permission_id"/>
+    </table>
+    <table name="django_admin_log" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="action_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="object_id" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="object_repr" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="action_flag" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="change_message" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="content_type_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="django_admin__content_type_id_5151027a_fk_django_content_type_id" columns="content_type_id" ref-table="django_content_type" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="django_admin_log_user_id_1c5f563_fk_auth_user_id" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="django_admin__content_type_id_5151027a_fk_django_content_type_id" unique="false" columns="content_type_id"/>
+      <index name="django_admin_log_user_id_1c5f563_fk_auth_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="django_content_type" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="app_label" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="model" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auth_permissi_content_type_id_51277a81_fk_django_content_type_id" table="auth_permission" schema="" catalog="sisloc" columns="content_type_id"/>
+      <exported-key name="django_admin__content_type_id_5151027a_fk_django_content_type_id" table="django_admin_log" schema="" catalog="sisloc" columns="content_type_id"/>
+      <index name="django_content_type_app_label_3ec8c61c_uniq" unique="true" columns="app_label,model"/>
+    </table>
+    <table name="django_migrations" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="app" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="applied" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="django_session" schema="" catalog="sisloc" type="TABLE">
+      <column name="session_key" sqlType="VARCHAR" precision="40" scale="0" nullable="false" jdbcType="12"/>
+      <column name="session_data" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="expire_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="session_key"/>
+      <index name="django_session_de54fa62" unique="false" columns="expire_date"/>
+    </table>
+    <table name="sislocapp_customers" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="254" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
+      <column name="enabled" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
+      <column name="creation_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="sislocapp_features" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="creation_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="sislocapp_product" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="capacity" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="type" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
+      <column name="creation_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="sislocapp_users" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="username" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="254" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="512" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
+      <column name="creation_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="t001_usuario" schema="" catalog="sisloc" type="TABLE">
+      <column name="T001_CODIGO" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="T001_USUARIO" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T001_SENHA" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T001_NOME" sqlType="VARCHAR" precision="128" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T001_DDD" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T001_TELEFONE" sqlType="VARCHAR" precision="9" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T001_EMAIL" sqlType="VARCHAR" precision="254" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T001_TIPO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="T001_DATA_CRIACAO" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <primary-key name="PRIMARY" columns="T001_CODIGO"/>
+    </table>
+    <table name="t002_cliente" schema="" catalog="sisloc" type="TABLE">
+      <column name="T002_CODIGO" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="T002_NOME" sqlType="VARCHAR" precision="256" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T002_DDD" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T002_TELEFONE" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T002_EMAIL" sqlType="VARCHAR" precision="256" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T002_TIPO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
+      <column name="T002_ATIVO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1" def="J1Mn"/>
+      <column name="T002_DATA_CRIACAO" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <primary-key name="PRIMARY" columns="T002_CODIGO"/>
+    </table>
+    <table name="t003_produto" schema="" catalog="sisloc" type="TABLE">
+      <column name="T003_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="T003_NOME" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T003_CATEGORIA" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="T003_AREA" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="T003_LOCALIZACAO" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <column name="T003_PROPRIETARIO" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="T003_HORARIO" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="T003_CARACTERISTICAS" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="T003_ID"/>
+    </table>
+  </data-source>
+</component>
