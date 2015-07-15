@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="Django default" uuid="6fbb71a9-271d-43b9-943b-4645172d833a">
+    <data-source name="MySQL - SisLoc" uuid="6fbb71a9-271d-43b9-943b-4645172d833a">
       <user-name>root</user-name>
       <user-password>dfd9dfd3dfd9dfcedfc8dfcb</user-password>
       <schema-pattern>sisloc.*</schema-pattern>

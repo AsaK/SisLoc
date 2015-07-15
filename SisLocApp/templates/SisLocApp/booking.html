@@ -34,9 +34,9 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                 <li><a href="./">Dashboard</a></li>
-                <li><a href="./booking">Reserva</a></li>
+                <li><a href="./booking" active>Reserva</a></li>
                 <li><a href="#contact">Relatórios</a></li>
-                <li class="dropdown active">
+                <li class="dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administração <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="./users">Usuários</a></li>
@@ -56,22 +56,22 @@
             {% if status == 'created' %}
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Novo usuário</strong> adicionado com sucesso!
+                    <strong>Reserva</strong> adicionada com sucesso!
                 </div>
             {% endif %}
             {% if status == 'updated' %}
                 <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Usuário</strong> atualizado com sucesso!
+                    <strong>Reserva</strong> atualizada com sucesso!
                 </div>
             {% endif %}
             {% if status == 'deleted' %}
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Usuário excluido</strong> com sucesso!
+                    <strong>Reserva excluida</strong> com sucesso!
                 </div>
             {% endif %}
-            <div class="panel-heading"><h2>Listar todos usuários</h2></div>
+            <div class="panel-heading"><h2>Listar todas as Reservas</h2></div>
             <form>
             <input type="hidden" name="action" value="excluir">
             <div class="panel-body">
@@ -81,24 +81,21 @@
                             <tr>
                                 <th>#</th>
                                 <th>#</th>
-                                <th>Nome</th>
+                                <th>Data</th>
+                                <th>Cliente</th>
                                 <th>Usuário</th>
-                                <th>Email</th>
-                                <th>Tipo</th>
                                 <th>Data de criação</th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            {% for Users in UsersResult %}
+                            {% for Booking in BookingsResult %}
                                 <tr>
-                                    <td><a href="./users?action=excluir&inputExcluir={{ Users.id }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
-                                    <td><a href="./users?action=alterar&inputAlterar={{ Users.id }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
-                                    <td>{{ Users.name }}</td>
-                                    <td>{{ Users.username }}</td>
-                                    <td>{{ Users.email }}</td>
-                                    <td>{{ Users.type }}</td>
-                                    <td>{{ Users.creation_date }}</td>
+                                    <td><a href="./booking?action=excluir&inputExcluir={{ Booking.id }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                                    <td><a href="./booking?action=alterar&inputAlterar={{ Booking.id }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+                                    <td>{{ Booking.date_init }} - {{ Booking.date_final }}</td>
+                                    <td>{{ Booking.customer.name }}</td>
+                                    <td>{{ Booking.user.name }}</td>
+                                    <td>{{ Booking.creation_date }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -106,22 +103,22 @@
                     <!-- Paginação -->
                     <nav class="col-md-offset-5">
                         <ul class="pagination">
-                            {% if UsersResult.has_previous %}
+                            {% if BookingsResult.has_previous %}
                                 <li>
-                                    <a href="?pagina={{ UsersResult.previous_page_number }}" aria-label="Anterior">
+                                    <a href="?pagina={{ BookingsResult.previous_page_number }}" aria-label="Anterior">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                             {% endif %}
-                            {% for Pages in UsersResult.paginator.page_range %}
-                                {% if UsersResult.number == Pages %}
+                            {% for Pages in BookingsResult.paginator.page_range %}
+                                {% if BookingsResult.number == Pages %}
                                     <li class="active"><a href="?pagina={{ Pages }}">{{ Pages }} <span class="sr-only">(current)</span></a></li>
                                 {% else %}
                                     <li><a href="?pagina={{ Pages }}">{{ Pages }}</a></li>
                                 {% endif %}
                             {% endfor %}
-                            {% if UsersResult.has_next %}
-                                <li><a href="?pagina={{ UsersResult.next_page_number }}"> <span aria-hidden="true">&raquo;</span></a></li>
+                            {% if BookingsResult.has_next %}
+                                <li><a href="?pagina={{ BookingsResult.next_page_number }}"> <span aria-hidden="true">&raquo;</span></a></li>
                             {% endif %}
                         </ul>
                     </nav>
@@ -129,7 +126,7 @@
             </div>
             <div class="panel-footer">
                 <div class="col-md-pull-1">
-                        <a href="./users?action=criar" >
+                        <a href="./booking?action=criar" >
                             <button type="button" class="btn btn-success">Novo Registro</button>
                         </a>
                 </div>
@@ -141,95 +138,26 @@
     {% if action == 'criar' or action == 'alterar' %}
         <!-- Grid de resultado -->
         <div class="panel panel-default" style="padding-top: 50px">
-            <div class="panel-heading"><h2>Criar novo usuário</h2></div>
+            <div class="panel-heading"><h2>Nova Reserva</h2></div>
             <div class="panel-body">
                 <div class="col-md-6">
                     <form class="form-horizontal" method="get">
                         <!-- Método de entrada -->
                         <input type="hidden" name="action" value="{{ action }}">
                         {% if action == 'alterar' %}
-                            <input type="hidden" name="inputAlterar" value="{{ UsersResult.id }}">
+                            <input type="hidden" name="inputAlterar" value="{{ FeaturesResult.id }}">
                         {% endif %}
-
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nome</label>
                             <div class="col-sm-10">
                                 {% if action == 'alterar' %}
-                                    <input required type="name" name="inputNome" value="{{ UsersResult.name }}" class="form-control" id="inputName" placeholder="Nome">
+                                    <input required type="name" name="inputNome" value="{{ FeaturesResult.name }}" class="form-control" id="inputName" placeholder="Nome">
                                 {% else %}
                                     <input required type="name" name="inputNome" class="form-control" id="inputName" placeholder="Nome">
 
                                 {% endif %}
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Usuário</label>
-                            <div class="col-sm-10">
-                                {% if action == 'alterar' %}
-                                    <input required type="name" name="inputUsuario" value="{{ UsersResult.username }}" class="form-control" id="inputUsuario" disabled placeholder="Usuário">
-                                {% else %}
-                                    <input required type="name" name="inputUsuario" class="form-control" id="inputUsuario" placeholder="Usuário">
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">E-mail</label>
-                            <div class="col-sm-10">
-                                {% if action == 'alterar' %}
-                                    <input required type="email" name="inputEmail" class="form-control" value="{{ UsersResult.email }}" id="inputEmail" placeholder="E-mail">
-                                {% else %}
-                                    <input required type="email" name="inputEmail" class="form-control" id="inputEmail" placeholder="E-mail">
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Tipo</label>
-                            <div class="col-sm-10">
-                                {% if action == 'alterar' %}
-                                    {% if UsersResult.type == 'A' %}
-                                        <label class="radio-inline">
-                                            <input type="radio" name="inputTipo" id="inputTipo" value="A" checked> Administrador
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="inputTipo" id="inputTipo" value="P"> Padrão
-                                        </label>
-                                    {% else %}
-                                        <label class="radio-inline">
-                                            <input type="radio" name="inputTipo" id="inputTipo" value="A"> Administrador
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="inputTipo" id="inputTipo" value="P" checked> Padrão
-                                        </label>
-                                    {% endif %}
-                                {% else %}
-                                    <label class="radio-inline">
-                                        <input type="radio" name="inputTipo" id="inputTipo" value="A" checked> Administrador
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="inputTipo" id="inputTipo" value="P"> Padrão
-                                    </label>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Senha</label>
-                            <div class="col-sm-10">
-                                {% if action == 'alterar' %}
-                                    <input  required type="password" name="inputSenha" value="0000000000000000" class="form-control" id="inputSenha" placeholder="Senha">
-                                    <div class="checkbox">
-                                        <label>
-                                          <input type="checkbox" name="inputAlterarSenha"> Alterar a senha?
-                                        </label>
-                                    </div>
-                                {% else %}
-                                    <input  required type="password" name="inputSenha" class="form-control" id="inputSenha" placeholder="Senha">
-                                {% endif %}
-                            </div>
-                        </div>
-
                 </div>
             </div>
             <div class="panel-footer">

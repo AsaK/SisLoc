@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="Django default" uuid="6fbb71a9-271d-43b9-943b-4645172d833a">
-    <database-info product="MySQL" version="5.6.23-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+  <data-source name="MySQL - SisLoc" uuid="6fbb71a9-271d-43b9-943b-4645172d833a">
+    <database-info product="MySQL" version="5.6.25-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
@@ -112,6 +112,30 @@
       <primary-key name="PRIMARY" columns="session_key"/>
       <index name="django_session_de54fa62" unique="false" columns="expire_date"/>
     </table>
+    <table name="sislocapp_booking" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date_init" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="date_final" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="creation_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="customer_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="SisLocApp_booking_customer_id_714a77e5_fk_SisLocApp_customers_id" columns="customer_id" ref-table="sislocapp_customers" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="SisLocApp_booking_user_id_2def7d9e_fk_SisLocApp_users_id" columns="user_id" ref-table="sislocapp_users" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="SisLocApp_booking_fe_booking_id_71cfc614_fk_SisLocApp_booking_id" table="sislocapp_booking_features" schema="" catalog="sisloc" columns="booking_id"/>
+      <index name="SisLocApp_booking_customer_id_714a77e5_fk_SisLocApp_customers_id" unique="false" columns="customer_id"/>
+      <index name="SisLocApp_booking_user_id_2def7d9e_fk_SisLocApp_users_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="sislocapp_booking_features" schema="" catalog="sisloc" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="booking_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="features_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="SisLocApp_booking__features_id_609bff95_fk_SisLocApp_features_id" columns="features_id" ref-table="sislocapp_features" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="SisLocApp_booking_fe_booking_id_71cfc614_fk_SisLocApp_booking_id" columns="booking_id" ref-table="sislocapp_booking" ref-schema="" ref-catalog="sisloc" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="booking_id" unique="true" columns="features_id"/>
+      <index name="SisLocApp_booking__features_id_609bff95_fk_SisLocApp_features_id" unique="false" columns="features_id"/>
+    </table>
     <table name="sislocapp_customers" schema="" catalog="sisloc" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
@@ -120,12 +144,14 @@
       <column name="enabled" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
       <column name="creation_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="SisLocApp_booking_customer_id_714a77e5_fk_SisLocApp_customers_id" table="sislocapp_booking" schema="" catalog="sisloc" columns="customer_id"/>
     </table>
     <table name="sislocapp_features" schema="" catalog="sisloc" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="creation_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="SisLocApp_booking__features_id_609bff95_fk_SisLocApp_features_id" table="sislocapp_booking_features" schema="" catalog="sisloc" columns="features_id"/>
     </table>
     <table name="sislocapp_product" schema="" catalog="sisloc" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -144,40 +170,7 @@
       <column name="type" sqlType="VARCHAR" precision="1" scale="0" nullable="false" jdbcType="12"/>
       <column name="creation_date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
-    </table>
-    <table name="t001_usuario" schema="" catalog="sisloc" type="TABLE">
-      <column name="T001_CODIGO" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="T001_USUARIO" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T001_SENHA" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T001_NOME" sqlType="VARCHAR" precision="128" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T001_DDD" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T001_TELEFONE" sqlType="VARCHAR" precision="9" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T001_EMAIL" sqlType="VARCHAR" precision="254" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T001_TIPO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
-      <column name="T001_DATA_CRIACAO" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
-      <primary-key name="PRIMARY" columns="T001_CODIGO"/>
-    </table>
-    <table name="t002_cliente" schema="" catalog="sisloc" type="TABLE">
-      <column name="T002_CODIGO" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="T002_NOME" sqlType="VARCHAR" precision="256" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T002_DDD" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T002_TELEFONE" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T002_EMAIL" sqlType="VARCHAR" precision="256" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T002_TIPO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1"/>
-      <column name="T002_ATIVO" sqlType="CHAR" precision="1" scale="0" nullable="true" jdbcType="1" def="J1Mn"/>
-      <column name="T002_DATA_CRIACAO" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
-      <primary-key name="PRIMARY" columns="T002_CODIGO"/>
-    </table>
-    <table name="t003_produto" schema="" catalog="sisloc" type="TABLE">
-      <column name="T003_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="T003_NOME" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T003_CATEGORIA" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="T003_AREA" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
-      <column name="T003_LOCALIZACAO" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
-      <column name="T003_PROPRIETARIO" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="T003_HORARIO" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
-      <column name="T003_CARACTERISTICAS" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
-      <primary-key name="PRIMARY" columns="T003_ID"/>
+      <exported-key name="SisLocApp_booking_user_id_2def7d9e_fk_SisLocApp_users_id" table="sislocapp_booking" schema="" catalog="sisloc" columns="user_id"/>
     </table>
   </data-source>
 </component>
